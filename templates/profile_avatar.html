@@ -1,0 +1,42 @@
+{% extends "layout.html" %}
+
+{%block title_block%} {{user.username  }}的设置|多便宜{%endblock%}
+
+
+
+{% block content_block %}
+   
+
+  <div class="content_header">
+
+   {%if  content %}
+   <div class="notify">
+      <div class="message" >
+       <h1>{{content}}</h1>
+      </div>
+   </div>
+   {% endif %}
+
+  <h1>{{user.username}}的设置</h1>
+  </div>
+<div class="bar"> 
+   <a href="/profile">基本信息</a><span class="current"><span>设置头像</span></span><a href="/profile/password">设置密码</a>
+ </div>
+<div class="inner">
+
+  <form action="/profile/avatar" method="post" id="signupform" class="account fl" enctype="multipart/form-data" >
+     <div class="item">
+      <label>头像</label>
+     <input type="file" name="avatar">
+    </div>
+
+    <input class="bigbutton submit" name="commit" type="submit" value="更新头像">
+  </form>
+
+  <div class="aside fr"> 
+   <img src="{{user.get_big_avatar()}}">
+  </div>
+</div>
+
+<div class="clear"></div>
+{%endblock%}

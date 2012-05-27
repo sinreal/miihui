@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+
+{% block content_block %}
+
+
+<div class="inner">
+<h1>使用分享工具快速分享</h1>
+<p>For Chrome &Firefox拖动此链接到书签栏
+<a href="javascript:void((function(){var count,i,j,t,url='',w=window,s=new Array(),d=document,f='http://127.0.01:8080/share',title=d.title,imglist=d.getElementsByTagName('img'),e=encodeURIComponent;for(i=0;i<imglist.length;i++){if(imglist[i].height*imglist[i].width>6400)t=s.push(imglist[i])}for(i=0;i<s.length-1;i++){for(j=i+1;j<s.length;j++){if(s[i].width*s[i].height<s[j].width*s[j].height){temp=s[i];s[i]=s[j];s[j]=temp}}}count=s.length;if(s.length>=6)count=6;for(i=0;i<count;i++){url=url+'u'+i+'='+s[i].src+'&'}url='count='+count+'&'+url;w.open(f+'?'+url+'fromurl='+e(w.location.href)+'&title='+e(title)+'&d='+e(w.getSelection?w.getSelection().toString():d.getSelection?d.getSelection():d.selection.createRange().text),'','toolbar=0,status=0,resizable=0,width=800,height=500')})());">分享到觅汇</a></p>
+
+
+
+<p>For IE ,右键加入到搜藏夹 </p>
+
+</div>
+
+{%endblock%}

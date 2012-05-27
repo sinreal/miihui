@@ -1,0 +1,52 @@
+{% extends "layout.html" %}
+
+{% block content_block %}
+
+
+<div>
+<div class="home_left">
+<div style="padding-left:10px;">
+<h1>发现品质生活</h1>
+</div>
+</div>
+
+<div style="float:right;width: 276px;padding-top:30px;">
+<a class="btn-large" href="/signup">立即注册</a>
+</div>
+
+</div>
+
+<div class="clear"></div>
+<div class="collections " >
+<h2>这一刻，正在分享</h2>
+{%for c in nodes %}
+
+<div class="front_item">
+<a href="/item/{{c.ID}}/">
+<img src="{{c.get_m_pic()}}" alt="{{c.name}}">
+<div class="cover boxcaption" style="top:220px;"><h3>{{c.name}}</h3></div>
+</a>
+</div>
+
+
+
+{% endfor%}
+
+</div>
+
+
+
+</div>
+
+<script type="text/javascript"> 
+			$(document).ready(function(){
+
+$('.front_item').hover(function(){
+					$(".cover", this).stop().animate({top:'160px'},{queue:false,duration:160});
+				}, function() {
+					$(".cover", this).stop().animate({top:'260px'},{queue:false,duration:160});
+				});
+
+});
+</script>
+{%endblock%}

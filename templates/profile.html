@@ -1,0 +1,48 @@
+{% extends "layout.html" %}
+
+{%block title_block%} {{user.username  }}的设置|多便宜{%endblock%}
+
+
+
+{% block content_block %}
+   
+
+  <div class="content_header">
+
+
+
+  <h1>{{user.username}}的设置</h1>
+  </div>
+<div class="bar"> 
+   <span class="current">
+           <span>基本信息</span></span><a href="/profile/avatar">设置头像</a><a href="/profile/password">更改密码</a>
+ </div>
+<div class="inner">
+</form>
+  <form action="/profile" method="post" id="signupform" class="account fl" enctype="multipart/form-data" >
+    <div class="item">
+      <label>邮箱</label>
+      <input id="email" name="email" type="email" class="basic-input" maxlength="60" tabindex="1" value="{{user.email}}" disabled="disabled">
+    </div>
+
+	 <div class="item">
+      <label>昵称</label>
+      <input id="name" name="username" type="email" class="basic-input" maxlength="60" tabindex="1" value="{{user.username}}" disabled="disabled">
+    </div>
+
+
+  <div class="item">
+      <label>简介</label>
+ <textarea id="desc-textarea" name="intro" rows="5" value="">{{user.intro}} </textarea>
+</div>
+
+    <input class="bigbutton submit" name="commit" type="submit" value="确定">
+  </form>
+
+  <div class="aside fr"> 
+  <img src="{{user.get_big_avatar()}}">
+  </div>
+</div>
+
+<div class="clear"></div>
+{%endblock%}

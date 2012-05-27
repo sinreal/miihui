@@ -1,0 +1,100 @@
+{% extends "layout.html" %}
+{%block title_block%} {{thisguy.username  }}的分享{%endblock%}
+
+{% block content_block %}
+   
+<script> 
+$(function(){
+$(".follow").click(function(){
+var self = this, id = self.rel;
+$.post("/follow", {follow:id}, function() {
+$("#follow-block").hide();
+$("#followed-block").show();
+n_span = $("#n_followed");
+n_span.text(n_span.text() - 0 + 1)
+})
+});
+$(".unfollow").click( function() {
+var self = this, id = self.rel;
+$.post("/unfollow", {unfollow:id}, function() {
+$("#follow-block").show();
+$("#followed-block").hide();
+n_span = $("#n_followed");
+n_span.text(n_span.text() - 0 - 1)
+})
+});
+})
+</script> 
+
+
+
+<div class="left_side_home">
+       <h1 ><a href="/user/{{thisguy.ID}}/">{{thisguy.username}}的评论 </a>  <a href="/user/{{thisguy.ID}}/collections/">收藏</a> 分享</h1>
+<div class="userpost">
+
+	{%for d in datalist%}
+	{% if  d[0]=="comment" %}
+	<div class="singlepost">
+	    <div class="avatar">
+		 <a href="/user/{{thisguy.ID}}/"><img src="{{thisguy.get_avatar()}}"></a></div>
+		 
+		 <div class="post_content">
+		<div class="triangle"></div>
+		<div class="title">对<a href="/item/{{d[1].ID}}/">{{d[1].name}}</a>评论：</div>
+		<div class="comment_content">{{d[2].content}}</div>
+		<div class="actions">
+			<span class="created_at" title="{{d[2].created}}">{{d[3]}}</span>
+		</div>
+		</div>
+    </div>
+{%elif d[0]=="share"%}
+<div class="singlepost">
+ <div class="avatar">
+		 <a href="/user/{{thisguy.ID}}/"><img src="{{thisguy.get_avatar()}}"></a></div>
+		 
+<div class="post_content">
+<div class="triangle"></div>
+<div class="title">分享了<a href="/item/{{d[1].ID}}/">{{d[1].name}}</a></div>
+<div class="actions">
+	<span class="created_at" title="{{d[2].created}}">{{d[3]}}</span>
+</div>
+</div>
+</div>
+{%else %}
+	<div class="singlepost">
+	<div class="avatar">
+		 <a href="/user/{{thisguy.ID}}/"><img src="{{thisguy.get_avatar()}}"></a></div>
+        
+       <div class="post_content">
+	   <div class="triangle"></div> 
+		<div class="title"></div>
+		<div class="comment_content">{{d[1].content}}</div>
+		<div class="actions">
+		<span class="created_at" title="{{d[1].created}}">{{d[2]}}</span>
+		</div>
+</div>
+</div>
+{% endif %}
+{% endfor %}
+
+</div>
+     
+{%if next %}
+<a href="?page={{next}}">下一页</a>
+{%endif%}
+
+ </div>
+
+<div class="right_side_home">
+<div class="right_up"></div>
+<div class="right_detail">
+</div>
+
+</div>
+
+
+<div class="clear"></div>
+
+
+
+{%endblock%}

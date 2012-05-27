@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+
+{% block content_block %}
+   
+{%if not is_login %}
+<div class="content_header">
+  <h1>您已经成功登出</h1>
+  </div>
+
+
+{% endif %}
+<div class="clear"></div>
+{%endblock%}
+
+

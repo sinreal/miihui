@@ -1,0 +1,88 @@
+{% extends "layout.html" %}
+{%block title_block%} {{user.username  }}的收藏{%endblock%}
+
+{% block content_block %}
+   
+<div class="left_side_home">
+<h2>{{thisguy.username}}的收藏</h2>
+
+
+
+
+
+<div class="user_collections " >
+
+{%for c in collections %}
+
+<div id="collect_item">
+<a href="/item/{{c.ID}}/">
+<img src="{{c.get_m_pic()}}">
+</a>
+</div>
+
+
+
+{% endfor%}
+
+
+
+</div>
+<div class="clear"></div>
+
+
+</div>
+<div class="right_side_home">
+<div class="right_up"></div>
+<div class="right_detail">
+<img src="{{thisguy.get_big_avatar()}}" style="margin: auto auto 25px;"><p > 
+<a href="/user/{{thisguy.ID}}/">{{thisguy.username}}</a> {{ thisguy.created.strftime('%Y-%m-%d')}}加入
+</p>
+<p>关注了 <a href="/{{thisguy.ID}}/followings/">{{counts[0]}}</a>个人,同时被<a href="/{{thisguy.ID}}/followeds/">{{counts[1]}}</a>个人关注
+</div>
+
+</div>
+
+<div class="clear"></div>
+
+</div>
+
+
+<script>
+$("#txt").removeAttr("disabled");
+$(".formbutton").click(function () {   
+     var stID=0;
+     var txt = $("#txt").val();
+     $.ajax({ type: "POST",  
+               url: "/comment/",    
+               data: {"stID":stID,"txt":txt,"type":"post"},
+               success: function(msg){
+               if(1){ 
+                      $("#message").show().html("发表成功！").fadeOut(3000);            
+             }else{alert("erro!");}}
+                });    });  
+
+
+$(function(){
+$('#txt').bind("blur focus keydown keypress keyup", function(){
+                recount();
+        });
+});
+ 
+function recount(){
+        var maxlen=140;
+        var current = maxlen-$('#txt').val().length;
+        $('.counter').html(current);
+        if(current<1 || current>maxlen){
+                $('.counter').css('color','#cccccc');
+                }
+        if(current<10)
+                $('.counter').css('color','#cccccc');
+        else if(current<20)
+                $('.counter').css('color','#cccccc');
+        else
+                $('.counter').css('color','#FF0084');
+ 
+}
+</script> 
+ 
+{%endblock%}

@@ -1,0 +1,214 @@
+{% extends "layout.html" %}
+{%block title_block%} {{item.name  }}|觅汇{%endblock%}
+
+{% block content_block %}
+<script type="text/javascript" src="{{STATIC_FILE_URL}}/jquery.tagsinput.js"></script>
+<link rel="stylesheet" type="text/css" href="{{STATIC_FILE_URL}}/jquery.tagsinput.css" />
+<script>
+
+
+$(function(){
+$(".txt_22").click(function(){
+var self = this, id = self.rel;
+$.post("/collect", {itemid:id}, function() {
+$("#collec-block").hide();
+$("#colleced-block").show();
+})
+});
+
+$('#tags').tagsInput({
+defaultText:"添加",
+onAddTag:function(tag){
+var id = {{item.ID}};
+{%if user and user.email=="sinreal@163.com" or user.email=="dinghan1987@126.com"
+%}
+$.post("/addtag", {itemid:id,tag:tag}, function() {})
+{%endif%}
+}});
+
+
+})
+
+
+   </script>
+
+<style type="text/css">
+        .jeip-saving {
+/*            background-image: url( 'http://josephscott.org/wp-content/js-org/jeip/ajax-loader.gif' ); */
+            background-repeat: no-repeat;
+            background-position: left;
+            background-color: #903;
+            color: #fff;
+        font-size: 20px;
+            padding: 3px 20px 3px 20px;
+        }
+
+        .jeip-mouseover, .jeip-editfield {
+            background-color: #ffff99;
+        padding: 5px;
+        }
+
+        .jeip-savebutton {
+		 
+            background-color: #6c0;
+            color: #fff;
+        }
+
+        .jeip-cancelbutton {
+            background-color: #ccc;
+            color: #fff;
+		
+        }
+
+		</style>
+
+
+
+
+<div class="left_side">
+	   {%if editble%}
+	    <h1 ><span id="text-edit"  class="" style="display: inline; ">{{item.name}}</span></h1>
+		{%else%}
+          <h1 ><span">{{item.name}}</span></h1>
+         {%endif%}
+
+       {%if user and user.email=="sinreal@163.com" %}
+	   <span id="select-edit" class="" style="display: inline; ">公开显示</span>
+	   {%endif%}
+
+
+         <div class="item_pic">
+    	 <img src="{{item.get_b_pic()}}" alt="{{item.name}}" >
+          </div>
+
+<div  class="intro">
+<h2>详情</h2>
+{{item.des}}
+</div>
+
+<div class="comment_input">
+          <h2>点评</h2>   
+           <textarea name="text" id="txt" style="width: 482px; height: 36px;"></textarea>
+                <input type="submit" class="formbutton" value="发表">
+                <p id="message"></p> 
+              
+</div>
+
+<div class="userpost">
+  {%for d in datalist%}
+	<div class="singlepost">
+	    <div class="avatar">
+		 <a href="/user/{{d[0].ID}}/"><img src="{{d[0].get_avatar()}}"></a></div>
+		 <div class="post_content">
+		<div class="triangle"></div>
+		<div class="comment_content">{{d[1].content}}</div>
+		<div class="actions">
+			<span class="created_at" title="{{d[1].created}}">{{d[1].created.strftime('%m-%d-%H:%M')}}</span>
+		</div>
+		</div>
+    </div>
+{% endfor %}
+</div>
+
+ </div>
+
+<div class="right_side">
+<div class="right_up"></div>
+
+<div class="right_userinfo">
+{%if creator%}
+<a href="/user/{{creator.ID}}/"><img src="{{creator.get_avatar()}}"></a>
+<p> 
+<a href="/user/{{creator.ID}}/">{{creator.username}}</a>分享
+于 {{ item.created.strftime('%Y-%m-%d')}}
+
+</p>
+{%endif%}
+</div>
+<div class="intro">
+</div>
+
+<div>
+<div class="blue_btn leftbtn">
+{%if  collected==False%}
+<a  id="collec-block" rel={{item.ID}} class="txt_22"   "javascript:void(0);">收藏</a>
+<a id ="colleced-block" class="txt_22" style="display:none" >已收藏</a>
+{%else%}
+<a id ="colleced-block" class="txt_22" style="" >已收藏</a>
+{%endif%}
+</div>
+
+
+<h2>去哪里买?</h2>
+{% for bi in item.buy_info%}
+<p>{%if bi.store%} 
+<a href="{{bi.link}}" target = "_blank" style="font-size:22px;text-decoration:underline;">{{bi.store}}:售价{{bi.price}}</a>
+{%else%}<a href="{{bi.link}}" target = "_blank" style="font-size:22px;text-decoration:underline;">先去看看</a>
+</p>
+{%endif%}
+{%endfor%}
+</div>
+
+
+<h2>标签</h2>
+
+<div ><input name="tags" id="tags" value="{%for tag in item.tags%}{{tag}},{%endfor%}" ></div>
+
+</div>
+
+ 
+ <div class="clear"></div>
+<script type="text/javascript">
+$("#txt").removeAttr("disabled");
+$(".formbutton").click(function () {   
+     var stID={{item.ID}};
+     var txt = $("#txt").val();
+     $.ajax({ type: "POST",  
+               url: "/comment/",    
+               data: {"stID":stID,"txt":txt,"type":"post"},
+               success: function(msg){
+               if(1){ $("#txt").val("");
+                      $("#message").show().html("发表成功！").fadeOut(3000);            
+             }else{alert("erro!");}}
+                });    });  
+
+
+$(function(){
+$('#txt').bind("blur focus keydown keypress keyup", function(){
+                recount();
+        });
+});
+ 
+function recount(){
+        var maxlen=140;
+        var current = maxlen-$('#txt').val().length;
+        $('.counter').html(current);
+        if(current<1 || current>maxlen){
+                $('.counter').css('color','#cccccc');
+                }
+        if(current<10)
+                $('.counter').css('color','#cccccc');
+        else if(current<20)
+                $('.counter').css('color','#cccccc');
+        else
+                $('.counter').css('color','#FF0084');
+ 
+}
+</script> 
+
+<script type="text/javascript" src="{{STATIC_FILE_URL}}/jeip.js"></script>
+
+<script type="text/javascript"> 
+$("#text-edit").eip( "/edittitle", { select_text: true } );
+$("#select-edit").eip( "/showinfont", {
+		form_type: "select",
+		select_options: {
+			yes	: "yes",
+			no	: "no",
+		}
+	} );
+</script> 
+
+
+
+{%endblock%}

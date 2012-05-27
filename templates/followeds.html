@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+
+{% block content_block %}
+
+<div class="left_side">
+<h1>关注{{thisguy.username}}的</h1>
+
+{%for  f in followeds%}
+<div class="f">
+<span class="profile_pic"><img src="{{f.get_avatar()}}" width="50" height="50" ></span>
+<a href="/user/{{f.ID}}/">{{f.username}}</a>
+
+</div>
+
+{%endfor%}
+
+</div>
+
+
+
+{%endblock%}

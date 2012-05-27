@@ -1,0 +1,90 @@
+{% extends "layout.html" %}
+
+{%block title_block%} 分享|觅汇{%endblock%}
+
+
+{% block content_block %}
+   
+
+<div class="content_header">
+  <h1>分享到觅汇&gt;或者使用<a rel="nofollow" href="/tools">快速发布工具</a></h1>
+  </div>
+
+
+<div class="inner">
+   {%if  content %}
+   <div class="notify">
+      <div class="message" >
+       <h1>{{content}}</h1>
+      </div>
+   </div>
+   {% endif %}
+
+  <form action="/share" method="post" id="signupform" class="account fl">
+
+   <div class="item">
+      <label><span>名称</span></label>
+      <input id="name" name="name"  type="text" class="basic-input" maxlength="60" tabindex="1" >
+    </div>
+	   <div class="item">
+      <label><span>分类</span></label>
+      <input id="name" class="ttags" name="tags"  type="text"  class="basic-input" maxlength="60" tabindex="1" >
+	  <div id="tags">
+	  点击输入标签
+	<a id="tag" name="女人"href="javascript:void(0)">女人</a> <a id="tag" name="男人" href="javascript:void(0)">男人</a> <a  name="娱乐" id="tag"  href="javascript:void(0)">娱乐</a> <a id="tag" name="极客" href="javascript:void(0)">极客</a>
+  </div>
+    </div>
+   <div class="item">
+      <label><span>来源</span></label>
+      <input id="name" name="source"  type="text" class="basic-input" maxlength="300" tabindex="1" >
+    </div>
+   <div class="item">
+      <label><span>价格</span></label>
+      <input id="name" name="price"  type="text" class="basic-input" maxlength="60" tabindex="1" >
+    </div>
+   <div class="item">
+      <label><span>图链</span></label>
+      <input id="name" name="picurl" type="text" class="basic-input" maxlength="300" tabindex="1" >
+    </div>
+
+  <div class="item">
+      <label><span>简介(选填)</span></label>
+ <textarea id="desc-textarea" name="intro" rows="5" value="">  </textarea>
+</div>
+<div class="item"><label><span></span></label>
+ <input class="bigbutton submit" name="commit" type="submit" value="发布">
+ </div>
+  </form>
+  <div class="aside fr">
+   <h2>  </h2>
+   
+  </div>
+<script>
+$("#tags a").click(
+function() {
+     var a=this,b=a.name;
+	 var v=$(".ttags").val();
+	 if (v!="")
+	 {$(".ttags").val(b); 
+	 }
+      else{$(".ttags").val(b);
+	  } 
+   
+   });
+ 
+
+
+</script>
+
+
+
+
+</div>
+
+
+<div class="clear"></div>
+{%endblock%}
+
+
+
+ 

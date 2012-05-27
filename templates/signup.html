@@ -1,0 +1,42 @@
+{% extends "layout.html" %}
+
+{% block content_block %}
+   
+
+  <div class="content_header">
+   {%block system_message%}
+   <div style="">
+   </div>
+    {% endblock  %}
+
+
+
+  <h1>在觅汇创建账号</h1>
+  </div>
+
+<div class="inner">
+  <form action="/signup" method="post" id="signupform" class="account fl">
+    <div class="item">
+      <label>邮箱</label>
+      <input id="email" name="email" type="email" class="basic-input" maxlength="60" tabindex="1" value="">
+    </div>
+    <div class="item">
+      <label>密码</label>
+      <input id="password" name="password" type="password" class="basic-input" tabindex="2" maxlength="64">
+    </div>
+    <div class="item nickname">
+      <label>昵称</label>
+      <input id="nickname" name="nickname" type="text" class="basic-input" maxlength="15" tabindex="3" value=""><br>
+      <span class="validate-option" id="nickname-note" style="display:none">中、英文均可，最长15个字符，以后可修改</span>
+    </div>
+    <input class="bigbutton submit" name="commit" type="submit" value="注册">
+  </form>
+  <div class="aside fr">
+    &gt; 已经拥有帐号? <a rel="nofollow" href="/login">直接登录</a>
+  </div>
+
+</div>
+
+
+<div class="clear"></div>
+{%endblock%}

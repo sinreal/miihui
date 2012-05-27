@@ -1,0 +1,43 @@
+{% extends "layout.html" %}
+
+{% block content_block %}
+   
+{%if not is_login %}
+<div class="content_header">
+  <h1>登录觅会</h1>
+  </div>
+
+
+<div class="inner">
+   {%if  content %}
+   <div class="notify">
+      <div class="message" >
+       <h1>{{content}}</h1>
+      </div>
+   </div>
+   {% endif %}
+
+  <form action="/login" method="post" id="signupform" class="account fl">
+    <div class="item">
+      <label>邮箱</label>
+      <input id="email" name="email" type="email" class="basic-input" maxlength="60" tabindex="1" value="">
+    </div>
+    <div class="item">
+      <label>密码</label>
+      <input id="password" name="password" type="password" class="basic-input" tabindex="2" maxlength="64">
+    </div>
+    <input class="bigbutton submit" name="commit" type="submit" value="登录">
+  </form>
+  <div class="aside fr">
+  &gt; 还没有账号? <a rel="nofollow" href="/signup">立即注册!</a>
+  </div>
+
+</div>
+
+{% endif %}
+<div class="clear"></div>
+{%endblock%}
+
+
+
+ 

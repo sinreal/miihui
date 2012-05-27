@@ -1,0 +1,142 @@
+{% extends "layout.html" %}
+{%block title_block%} {{thisguy.username  }}的分享{%endblock%}
+
+{% block content_block %}
+   
+<script> 
+$(function(){
+$(".follow").click(function(){
+var self = this, id = self.rel;
+$.post("/follow", {follow:id}, function() {
+$("#follow-block").hide();
+$("#followed-block").show();
+n_span = $("#n_followed");
+n_span.text(n_span.text() - 0 + 1)
+})
+});
+$(".unfollow").click( function() {
+var self = this, id = self.rel;
+$.post("/unfollow", {unfollow:id}, function() {
+$("#follow-block").show();
+$("#followed-block").hide();
+n_span = $("#n_followed");
+n_span.text(n_span.text() - 0 - 1)
+})
+});
+})
+</script> 
+
+
+
+<div class="left_side_home">
+       <h1 >{{thisguy.username}}的评论   <a href="/user/{{thisguy.ID}}/collections/">收藏</a> <a href="/user/{{thisguy.ID}}/share/">分享</a>
+</h1>
+<div class="userpost">
+
+	{%for d in datalist%}
+	{% if  d[0]=="comment" %}
+	<div class="singlepost">
+	    <div class="avatar">
+		 <a href="/user/{{thisguy.ID}}/"><img src="{{thisguy.get_avatar()}}"></a></div>
+		 
+		 <div class="post_content">
+		<div class="triangle"></div>
+		<div class="title">对<a href="/item/{{d[1].ID}}/">{{d[1].name}}</a>评论：</div>
+		<div class="comment_content">{{d[2].content}}</div>
+		<div class="actions">
+			<span class="created_at" title="{{d[2].created}}">{{d[3]}}</span>
+		</div>
+		</div>
+    </div>
+{%elif d[0]=="share"%}
+<div class="singlepost">
+ <div class="avatar">
+		 <a href="/user/{{thisguy.ID}}/"><img src="{{thisguy.get_avatar()}}"></a></div>
+		 
+<div class="post_content">
+<div class="triangle"></div>
+<div class="title">分享了<a href="/item/{{d[1].ID}}/">{{d[1].name}}</a></div>
+<div class="actions">
+	<span class="created_at" title="{{d[2].created}}">{{d[3]}}</span>
+</div>
+</div>
+</div>
+{%else %}
+	<div class="singlepost">
+	<div class="avatar">
+		 <a href="/user/{{thisguy.ID}}/"><img src="{{thisguy.get_avatar()}}"></a></div>
+        
+       <div class="post_content">
+	   <div class="triangle"></div> 
+		<div class="title"></div>
+		<div class="comment_content">{{d[1].content}}</div>
+		<div class="actions">
+		<span class="created_at" title="{{d[1].created}}">{{d[2]}}</span>
+		</div>
+</div>
+</div>
+{% endif %}
+{% endfor %}
+
+</div>
+     
+{%if next %}
+<a href="?page={{next}}">下一页</a>
+{%endif%}
+
+ </div>
+
+<div class="right_side_home">
+<div class="right_up"></div>
+<div class="right_detail">
+<img src="{{thisguy.get_big_avatar()}}" style="margin: auto auto 25px;"><p> 
+<a href="/user/{{thisguy.ID}}/">{{thisguy.username}}</a> {{ thisguy.created.strftime('%Y-%m-%d')}}加入
+</p>
+<p>关注了 <a href="/{{thisguy.ID}}/followings/">{{counts[0]}}</a>个人,同时被<a href="/{{thisguy.ID}}/followeds/">{{counts[1]}}</a>个人关注</p>
+{% if relation=="self"  %}
+<p >这是我的主页 </p>
+{% endif %}
+{% if relation=="ifollowhim"  %}
+<div class="follow-block " id="followed-block">
+<span>
+<a href="javascript:void(0)" class="red-link" rel="{{thisguy.ID}}" style="background-color:#ccc">已关注</a>
+</span>
+<span>
+
+<a href="javascript:void(0)" class="unfollow" rel="{{thisguy.ID}}" style="color:#ccc">取消</a>
+</span>
+</div>
+
+<div class="follow-block  hide" id="follow-block">
+<a href="javascript:void(0)" class="follow red-link" rel="{{thisguy.ID}}">关注</a>
+</div>
+{% endif %}
+{% if  not relation   %}
+<div class="follow-block  hide" id="followed-block">
+<span>
+<a href="javascript:void(0)" class="red-link" rel="{{thisguy.ID}}" style="background-color:#ccc">已关注</a>
+</span>
+<span>
+
+<a href="javascript:void(0)" class="unfollow" rel="{{thisguy.ID}}" style="color:#ccc">取消</a>
+</span>
+</div>
+
+<div class="follow-block " id="follow-block">
+<a href="javascript:void(0)" class="follow red-link" rel="{{thisguy.ID}}">关注</a>
+</div>
+
+
+
+{% endif %}
+
+</div>
+
+</div>
+
+
+<div class="clear"></div>
+
+
+
+{%endblock%}
