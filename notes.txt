@@ -1,0 +1,56 @@
+研究 wanelo 
+改变功能，去掉了自言自语功能。
+todo  商品信息中加入 大店中的小店名 如 淘宝 XXX 这样，或者是只存小店名，大店名根据url写函数
+todo  链接去重复
+todo  修改ico 404  done!
+todo  搜藏  分类 功能 
+todo  没有登录时 点击搜藏 评论等提示登陆或注册
+todo  新浪 qq微博登录 ，以及绑定
+todo  把分享的内容放到新的表中 done!
+todo  相关索引  ID ，tags 等
+todo  淘宝优化，调用api直接显示价格等相关信息
+todo  记录注册或登录ip信息供研究
+todo  相关物品，推荐系统，关注了xx的也关注
+todo  userinfo 里性别 
+todo  未登录访问user页面的bug done
+todo  登录时提示未注册 done
+todo  反馈，讨论区或者小组功能等
+todo  首页主题 
+todo  通知功能
+todo  好友动态 
+todo  404 500修改
+todo  统一数据库中标签的功能
+todo  快速发布（输入一个链接后直接生成页面，选择）
+todo  各处防止出错功能
+todo  智能tag功能
+
+todo  收藏变为喜欢？ 搜藏数量？
+86 号（包括）之前的图片都已上传到upyun
+
+备忘 
+
+logo字体   方正准圆简
+微博登录方案
+
+1 登录后 取得screenname ，如果有相同的name则在后面加几个随机数字
+此时没有邮箱  没有密码 
+
+2 新建一个token表，记录id，token，标记 "sina+id" "douban+id" ... 过期时间 ，来源 
+登陆后 先根据 "sina+id"查询是否有该人，如果没有则新建一个用户，在token表里加入id,token等
+如有有此人 则跟新一下 token 如果有该人 ，则查询此人id ，查看是否绑定，如果是绑定账户，则调用user的信息如果未绑定 也调用user的信息
+如果曾用微博登录，而后注册又绑定微博，则 微博登录后直接转向注册账号，原来生成的账号废弃
+绑定在role里面修改。
+
+
+
+3 淘宝主要api
+ 1 item.get  注意price有个区间的问题
+ 2 淘客 api  
+ 3 taobao.ump.promotion.get  优惠查询
+
+
+
+
+
+
+
