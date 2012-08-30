@@ -1,0 +1,54 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<head>
+<meta charset="utf-8">
+<title>{%block title_block%} 管理员模式{%endblock%}</title>
+<link rel="stylesheet" type="text/css" media="screen" href="{{STATIC_FILE_URL}}/site.css">
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" charset="utf-8"></script>  
+</head>
+
+<body>
+{% import "blocks.html" as blocks %}
+<div id="header"> 
+    {% block head_block %}
+        <div id="site">
+            <div id="logo" class="fl"><a href="/"></a></div>
+           <div class="main_nav" class="fl">
+		   <ul id="main_nav_ul">
+		       <li><a href="/">首页</a></li> 
+			   <li><a href="/allusers">所有用户</a></li>
+			   <li><a href="/allitems">所有分享</a></li>
+              <li><a href="/allposts">所有发言</a></li>
+		   </ul>
+		   </div>		   
+    {%if user%}
+                <!-- 已登录：个人信息框 -->
+                {{blocks.people_info_block(user)}}
+                <!-- End 个人信息框 -->
+            {%else%}
+                <!-- 登录 -->
+                {{blocks.login()}}
+            {%endif%}
+			
+        </div>
+    {%endblock%}
+</div>
+
+<div id="main">
+    {% block main_block %}
+        <div id="content"> 
+            {%block content_block %}
+            {% endblock%}
+        </div>
+    {% endblock %}
+</div>
+<div id="footer">
+    {%block footer_block%}
+      <div id="foot">
+	  <div id="footwapper">
+       <a class="dark" href="/aboutus"> 关于我们 </a> &nbsp;&nbsp;
+	   </div>
+      </div>
+   {% endblock %}
+</div>
+</body>
+</html>

@@ -1,0 +1,47 @@
+{% extends "layout.html" %}
+
+{% block content_block %}
+   
+ 
+
+
+
+<div id="container"> 
+{% for node in nodes %}
+<div class="pic">
+
+	{%if node.picinfo==101%}
+		<a href="/item/{{node.ID}}/"><img src="{{node.picurl}}"></a>
+
+		{%else%}
+         <a href="/item/{{node.ID}}/"><img src="{{STATIC_FILE_URL}}/{{node.picurl}}"></a>
+		 {%endif%}
+<p>{{node.des}}</p>
+</div>
+{% endfor  %}
+</div>
+
+
+
+
+
+
+
+
+<script src="http://gupiao0.com/static/jquery.masonry.min.js"></script> 
+<script> 
+  $(function(){
+ 
+    var $container = $('#container');
+  
+    $container.imagesLoaded( function(){
+      $container.masonry({
+        itemSelector : '.pic'
+                 columnWidth : 280
+      });
+    });
+  
+  });
+</script> 
+
+{%endblock%}

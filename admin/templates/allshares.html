@@ -1,0 +1,32 @@
+{% extends "layout.html" %}
+{%block title_block%} 所有分享_管理员模式{%endblock%}
+{% block content_block %}
+
+<div style="" >
+{%for node in nodes%}
+
+
+ <div style="float:left;padding:5px 15px 5px  5px; width:650px;">
+ 
+ <strong>编号:{{node.ID}}</strong>
+ <a style="padding:0 10px 0 10px;"  href="/item/{{node.ID}}/">{{node.name}}</a>
+
+ <a style="padding:0 10px 0 10px;" href="/edititem?itemid={{node.ID}}&action=del">删除</a>
+ 
+ <a href="/edititem?itemid={{node.ID}}&action=showinfront">前台展示</a>
+
+
+</div>
+
+
+{%endfor%}
+</div>
+<div style="clear:both"></div>
+
+
+
+
+
+{%if next%}<a href="?page={{next}}" >下一页</a>{%endif%}
+
+{%endblock%}

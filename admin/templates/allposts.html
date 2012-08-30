@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+{%block title_block%}所有发言_管理员模式{%endblock%}
+{% block content_block %}
+
+{% for data in datalist%}
+
+<div style="" >
+ <div style="float:left;padding:5px 15px 0  5px;"> <img src="{{data[0].get_avatar()}}" ></div>
+<div style=""><strong>编号{{data[1].ID}}</strong> <a href="/user/{{data[0].ID}}/">{{data[0].username}}</a> 
+ <div>{{data[1].content}}  <span>{{data[1].created}}</span>
+<a href="/editpost?postid={{data[1].ID}}&action=del">删除该发言</a>
+ {%if data[1].flag==-1%}
+ 发言已经被删除
+ {% endif %}
+</div>
+</div>
+</div>
+<div style="clear:both"></div>
+
+
+{%endfor%}
+
+
+
+{%if next%}<a href="?page={{next}}" >下一页</a>{%endif%}
+
+{%endblock%}

@@ -1,0 +1,30 @@
+{% extends "layout.html" %}
+{%block title_block%}所有用户_管理员模式{%endblock%}
+{% block content_block %}
+
+{%for user in users%}
+
+<div style="" >
+ <div style="float:left;padding:5px 15px 0  5px;"> <img src="{{user.get_avatar()}}" ></div>
+<div style=""> <a href="/user/{{user.ID}}/">{{user.username}}</a> 
+{% if user.role==2%}
+状态正常
+<a href="/edituser?uid={{user.ID}}&action=block">封杀</a>
+{%elif user.role==1%}
+被封禁一周
+<a href="/edituser?uid={{user.ID}}&action=unblock">解封</a>
+{%else %}
+被永久封禁
+{% endif %}
+
+
+
+</div>
+</div>
+<div style="clear:both"></div>
+
+{% endfor %}
+
+{%if next%}<a href="?page={{next}}" >下一页</a>{%endif%}
+
+{%endblock%}

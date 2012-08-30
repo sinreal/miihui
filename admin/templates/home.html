@@ -1,0 +1,110 @@
+{% extends "layout.html" %}
+{%block title_block%} {{user.username  }}的分享{%endblock%}
+
+{% block content_block %}
+   
+<div class="left_side">
+       <h1 >{{user.username}}的分享</h1>
+<div class="comment_input">
+          <h2>点评一下</h2>   <p class="tip">可以输入<span class="counter" style="color: rgb(255, 0, 132); ">140</span>字</p>
+           <textarea name="text" id="txt" style=""></textarea>
+                <input type="submit" class="formbutton" value="发送">
+                <p id="message"></p> 
+              
+</div>
+
+<div class="clear"></div>
+
+<div class="userpost">
+
+	{%for d in datalist%}
+	{% if  d[0]=="comment" %}
+	<div class="singlepost">
+		<div class="title">对<a href="/item/{{d[1].ID}}/">{{d[1].name}}</a>评论：</div>
+		<div class="comment_content">{{d[2].content}}</div>
+		<div class="actions">
+			<span class="created_at" title="{{d[2].created}}">{{d[3]}}</span>
+		</div>
+    </div>
+{%elif d[0]=="share"%}
+<div class="singlepost">
+<div class="title">分享了<a href="/item/{{d[1].ID}}/">{{d[1].name}}</a></div>
+<div class="actions">
+	<span class="created_at" title="{{d[2].created}}">{{d[3]}}</span>
+</div>
+</div>
+
+{%else %}
+	<div class="singlepost">
+		<div class="title">说：</div>
+		<div class="comment_content">{{d[1].content}}</div>
+		<div class="actions">
+		<span class="created_at" title="{{d[1].created}}">{{d[2]}}</span>
+		</div>
+</div>
+{% endif %}
+{% endfor %}
+
+{%if next %}
+<a href="?page={{next}}">下一页</a>
+{%endif%}
+</div>
+<!--发言区结束-->
+
+<!--左边栏结束          -->
+ </div>
+
+<div class="right_side">
+<div class="right_up"></div>
+<div class="right_detail">
+<img src="{{STATIC_FILE_URL}}/{{user.avatar_big}}" style="margin: auto auto 25px;"><p > 
+<a href="/user/{{user.ID}}/">{{user.username}}</a> {{ user.created.strftime('%Y-%m-%d')}}加入
+</p>
+<p>关注了{{counts[0]}}个人,同时被{{counts[1]}}个人关注</p>
+</div>
+
+</div>
+<br>
+</div>
+
+
+
+<script>
+$("#txt").removeAttr("disabled");
+$(".formbutton").click(function () {   
+     var stID=0;
+     var txt = $("#txt").val();
+     $.ajax({ type: "POST",  
+               url: "/comment/",    
+               data: {"stID":stID,"txt":txt,"type":"post"},
+               success: function(msg){
+               if(1){ 
+                      $("#message").show().html("发表成功！").fadeOut(3000);            
+             }else{alert("erro!");}}
+                });    });  
+
+
+$(function(){
+$('#txt').bind("blur focus keydown keypress keyup", function(){
+                recount();
+        });
+});
+ 
+function recount(){
+        var maxlen=140;
+        var current = maxlen-$('#txt').val().length;
+        $('.counter').html(current);
+        if(current<1 || current>maxlen){
+                $('.counter').css('color','#cccccc');
+                }
+        if(current<10)
+                $('.counter').css('color','#cccccc');
+        else if(current<20)
+                $('.counter').css('color','#cccccc');
+        else
+                $('.counter').css('color','#FF0084');
+ 
+}
+</script> 
+ 
+{%endblock%}

@@ -1,0 +1,44 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+ <HEAD>
+  <TITLE> test </TITLE>
+  <META NAME="Generator" CONTENT="EditPlus">
+  <META NAME="Author" CONTENT="">
+  <META NAME="Keywords" CONTENT="">
+  <META NAME="Description" CONTENT="">
+  
+ </HEAD>
+
+ <BODY>
+
+<div><img  id="1"   src="http://s9.img.guang.com/product/39/52/103/1035239_1_2891604911644_320X320.jpg"> </div>
+<div ><img  id="2"  src="http://static.guang.com/img/event/detail-event2.png"></div>
+
+
+
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" charset="utf-8"></script> 
+<script type="text/javascript" >
+$(window).load(
+function(){
+var i;
+for (i=1;i<=2;i++ )
+{
+//alert($('#'+i).width());
+if ($('#'+i).width()<320)
+{
+$('#'+i).hide();
+}
+}
+
+}
+
+
+
+)
+</script>
+
+
+
+ </BODY>
+</HTML>

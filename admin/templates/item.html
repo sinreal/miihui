@@ -1,0 +1,152 @@
+{% extends "layout.html" %}
+{%block title_block%} {{item.name  }}|管理员模式{%endblock%}
+
+{% block content_block %}
+
+<script>
+ $(window).load(function() {
+ var max_size = 500;
+
+$("img").each(function(i) {
+  if ($(this).width() > 500) {
+    var w = max_size;
+    var h = Math.ceil($(this).height() / $(this).width() * max_size);
+  }
+
+  $(this).css({ height: h, width: w });
+
+});
+
+
+ });
+   </script>
+
+
+<div class="left_side">
+       <h1 >{{item.name}}</h1>
+        <div class="item_pic">
+		{%if item.picinfo==101%}
+		<img src="{{item.picurl}}">
+		{%else%}
+         <img src="{{STATIC_FILE_URL}}/{{item.picurl}}">
+		 {%endif%}
+          </div>
+
+<div  class="intro">
+<h2>详情</h2>
+{{item.des}}
+</div>
+
+
+<div class="comment_input">
+          <h2>点评一下</h2>   <p class="tip">可以输入<span class="counter" style="color: rgb(255, 0, 132); ">140</span>字</p>
+           <textarea name="text" id="txt" style="width: 482px; height: 36px;"></textarea>
+                <input type="submit" class="formbutton" value="发送">
+                <p id="message"></p> 
+              
+</div>
+
+<div class="userpost">
+
+	{%for d in datalist%}
+
+	<div class="singlepost">
+	    <div class="avatar">
+		 <a href="/user/{{d[0].ID}}/"><img src="{{STATIC_FILE_URL}}/{{d[0].avatar}}"></a></div>
+		
+		 <div class="post_content">
+		<div class="triangle"></div>
+		<div class="comment_content">{{d[1].content}}</div>
+		<div class="actions">
+			<span class="created_at" title="{{d[1].created}}">{{d[1].created.strftime('%m-%d-%H:%M')}}</span>
+		</div>
+		</div>
+    </div>
+{% endfor %}
+</div>
+
+ </div>
+
+<div class="right_side">
+<div class="right_up"></div>
+
+<div class="right_userinfo">
+{%if creator%}
+<img src="{{STATIC_FILE_URL}}/{{creator.avatar}}"><p > 
+<a href="/user/{{creator.ID}}/">{{creator.username}}</a>分享于
+于 {{ item.created.strftime('%Y-%m-%d')}}
+
+</p>
+{%endif%}
+</div>
+<div class="intro">
+
+<h2>购买链接</h2>
+{% for bi in item.buy_info%}
+<a href="{{bi.link}}" target = "_blank">{{bi.store}} {{bi.price}}</a>
+{%endfor%}
+</div>
+<div  class="intro">
+<h2>分类</h2>
+{% for tag in item.tags%}
+{{tag}}
+{%endfor%}
+</div>
+
+
+
+</div>
+
+
+
+
+    <div class="clear"></div>
+<script>
+$("#txt").removeAttr("disabled");
+$(".formbutton").click(function () {   
+     var stID={{item.ID}};
+     var txt = $("#txt").val();
+     $.ajax({ type: "POST",  
+               url: "/comment/",    
+               data: {"stID":stID,"txt":txt,"type":"post"},
+               success: function(msg){
+               if(1){ $("#txt").val("");
+                      $("#message").show().html("发表成功！").fadeOut(3000);            
+             }else{alert("erro!");}}
+                });    });  
+
+
+$(function(){
+$('#txt').bind("blur focus keydown keypress keyup", function(){
+                recount();
+        });
+});
+ 
+function recount(){
+        var maxlen=140;
+        var current = maxlen-$('#txt').val().length;
+        $('.counter').html(current);
+        if(current<1 || current>maxlen){
+                $('.counter').css('color','#cccccc');
+                }
+        if(current<10)
+                $('.counter').css('color','#cccccc');
+        else if(current<20)
+                $('.counter').css('color','#cccccc');
+        else
+                $('.counter').css('color','#FF0084');
+ 
+}
+</script> 
+ 
+<script>
+ 
+
+
+</script>
+
+
+
+
+
+{%endblock%}

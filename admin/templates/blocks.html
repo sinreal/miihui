@@ -1,0 +1,17 @@
+{% macro people_info_block(user) -%}
+
+<!-- 已登录：个人信息 -->
+{%if user%}
+<ul class="top-nav">
+           <li><a href="/home">{{user.username}}</a><a href="/"></a><a href="/logout">登出</a></li>      
+</ul>
+
+{%endif%}
+<!-- End 个人信息框 -->
+{%- endmacro %}
+
+{% macro login() -%}
+<ul class="top-nav">
+<li><a href="/login"><font><font class="">登陆</font></font></a></li>
+</ul>
+{%- endmacro %}

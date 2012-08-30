@@ -1,0 +1,24 @@
+#更新购买信息
+from models.node import *
+from lib.get_taobao_test import *
+from lib.tools import *
+for n in Node.objects():
+  link=n.buy_info[0].link
+  if "taobao.com" in link or "tmall.com" in link:
+         iid=get_clear_id(link)
+         print iid,n.ID,link
+         if "taobao.com" in link:
+               url="http://item.taobao.com/item.htm?id=%s"%iid
+         if "tmall.com" in link:
+               url="http://detail.tmall.com/item.htm?id=%s"%iid
+         try:
+          info=get_store_detail(iid)
+          if 1:
+           (picurl,price,name,storename)=info
+          n.buy_info[0].price=price
+          if not n.buy_info[0].store:
+          #n.buy_info[0].link=url   
+             n.buy_info[0].store=get_store(url).decode("utf-8")
+          n.save()
+         except:
+             print "erro",n.ID 
